@@ -1,5 +1,6 @@
 package io.conduit.connectors.file;
 
+import io.conduit.sdk.Main;
 import io.conduit.sdk.Parameter;
 import io.conduit.sdk.Record;
 import io.conduit.sdk.WriteResult;
