@@ -1,6 +1,6 @@
 package io.conduit.connectors.file;
 
-import io.conduit.sdk.Specification;
+import io.conduit.sdk.specification.Specification;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

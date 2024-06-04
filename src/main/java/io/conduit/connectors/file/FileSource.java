@@ -1,19 +1,13 @@
 package io.conduit.connectors.file;
 
-import io.conduit.sdk.Parameter;
-import io.conduit.sdk.Position;
-import io.conduit.sdk.Record;
-import jakarta.enterprise.context.ApplicationScoped;
-
 import java.util.Map;
+
+import io.conduit.sdk.record.Position;
+import io.conduit.sdk.record.Record;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class FileSource implements io.conduit.sdk.Source {
-    @Override
-    public Map<String, Parameter> parameters() {
-        return null;
-    }
-
     @Override
     public void configure(Map<String, String> configMap) {
 
@@ -52,5 +46,10 @@ public class FileSource implements io.conduit.sdk.Source {
     @Override
     public void lifecycleOnDeleted(Map<String, String> config) {
 
+    }
+
+    @Override
+    public Object defaultConfig() {
+        return null;
     }
 }

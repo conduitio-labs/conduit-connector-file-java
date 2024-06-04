@@ -1,17 +1,15 @@
 package io.conduit.connectors.file;
 
-import io.conduit.sdk.Main;
-import io.conduit.sdk.Parameter;
-import io.conduit.sdk.Record;
-import io.conduit.sdk.WriteResult;
-import jakarta.enterprise.context.ApplicationScoped;
-import lombok.SneakyThrows;
-import org.jboss.logging.Logger;
-
 import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+
+import io.conduit.sdk.WriteResult;
+import io.conduit.sdk.record.Record;
+import jakarta.enterprise.context.ApplicationScoped;
+import lombok.SneakyThrows;
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class FileDestination implements io.conduit.sdk.Destination {
@@ -21,14 +19,8 @@ public class FileDestination implements io.conduit.sdk.Destination {
     private FileOutputStream stream;
 
     @Override
-    public Map<String, Parameter> parameters() {
-        return Map.of(
-            "path",
-            Parameter.builder()
-                .description("Path to the file.")
-                .required(true)
-                .build()
-        );
+    public Object defaultConfig() {
+        return new FileDestinationConfig();
     }
 
     @Override
