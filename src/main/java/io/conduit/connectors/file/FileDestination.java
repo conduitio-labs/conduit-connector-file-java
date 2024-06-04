@@ -19,8 +19,8 @@ public class FileDestination implements io.conduit.sdk.Destination {
     private FileOutputStream stream;
 
     @Override
-    public Object defaultConfig() {
-        return new FileDestinationConfig();
+    public Class<FileDestinationConfig> configClass() {
+        return FileDestinationConfig.class;
     }
 
     @Override

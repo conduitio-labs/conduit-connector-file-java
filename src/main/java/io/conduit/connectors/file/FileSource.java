@@ -49,7 +49,7 @@ public class FileSource implements io.conduit.sdk.Source {
     }
 
     @Override
-    public Object defaultConfig() {
+    public Class<Object> configClass() {
         return null;
     }
 }
