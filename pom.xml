@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>io.conduit</groupId>
-        <artifactId>conduit-connector-java-sdk-poc</artifactId>
+        <artifactId>conduit-connector-java-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
@@ -15,20 +15,14 @@
     <version>0.1.0-SNAPSHOT</version>
 
     <properties>
-        <compiler-plugin.version>3.11.0</compiler-plugin.version>
-        <maven.compiler.release>22</maven.compiler.release>
+        <maven.compiler.source>22</maven.compiler.source>
+        <maven.compiler.target>22</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skipITs>true</skipITs>
-        <surefire-plugin.version>3.0.0</surefire-plugin.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>io.conduit</groupId>
-            <artifactId>conduit-connector-java-sdk-poc</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
