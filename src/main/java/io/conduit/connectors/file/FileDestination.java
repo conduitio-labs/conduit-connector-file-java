@@ -1,7 +1,6 @@
 package io.conduit.connectors.file;
 
 import java.io.FileOutputStream;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +9,11 @@ import io.conduit.sdk.WriteResult;
 import io.conduit.sdk.record.Record;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.Logger;
 
 @ApplicationScoped
+@Slf4j
 public class FileDestination implements io.conduit.sdk.Destination {
     private static final Logger logger = Logger.getLogger(FileDestination.class);
 
@@ -44,7 +45,9 @@ public class FileDestination implements io.conduit.sdk.Destination {
 
         for (int i = 0; i < records.size(); i++) {
             try {
-                stream.write(records.get(i).getPayload().getAfter().bytes());
+                byte[] bytes = records.get(i).getPayload().getAfter().bytes();
+                log.info("writing line: {}", new String(bytes));
+                stream.write(bytes);
                 stream.flush();
             } catch (Exception e) {
                 logger.error("failed writing record", e);
