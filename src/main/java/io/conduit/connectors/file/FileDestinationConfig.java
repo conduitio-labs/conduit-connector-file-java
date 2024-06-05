@@ -4,7 +4,9 @@ import io.conduit.sdk.specification.Default;
 import io.conduit.sdk.specification.GreaterThan;
 import io.conduit.sdk.specification.Regex;
 import io.conduit.sdk.specification.Required;
+import lombok.Data;
 
+@Data
 public class FileDestinationConfig {
     @Regex("/home/")
     @Required

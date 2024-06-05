@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
+import io.conduit.sdk.ConfigUtils;
 import io.conduit.sdk.WriteResult;
 import io.conduit.sdk.record.Record;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -15,8 +16,8 @@ import org.jboss.logging.Logger;
 public class FileDestination implements io.conduit.sdk.Destination {
     private static final Logger logger = Logger.getLogger(FileDestination.class);
 
-    private Path path;
     private FileOutputStream stream;
+    private FileDestinationConfig cfg;
 
     @Override
     public Class<FileDestinationConfig> configClass() {
@@ -25,17 +26,14 @@ public class FileDestination implements io.conduit.sdk.Destination {
 
     @Override
     public void configure(Map<String, String> configMap) {
-        String pathString = configMap.get("path");
-        if (pathString == null) {
-            throw new IllegalArgumentException("path not configured");
-        }
-        this.path = Path.of(pathString);
+        FileDestinationConfig cfg = ConfigUtils.parse(configMap, configClass());
+        this.cfg = cfg;
     }
 
     @SneakyThrows
     @Override
     public void open() {
-        this.stream = new FileOutputStream(this.path.toString(), true);
+        this.stream = new FileOutputStream(cfg.getPath(), true);
     }
 
     @Override
