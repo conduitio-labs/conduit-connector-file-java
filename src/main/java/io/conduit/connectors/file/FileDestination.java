@@ -1,6 +1,7 @@
 package io.conduit.connectors.file;
 
 import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,8 @@ public class FileDestination implements io.conduit.sdk.Destination {
 
     private FileOutputStream stream;
     private FileDestinationConfig cfg;
+    private StringBuilder sb;
+    private int counter;
 
     @Override
     public Class<FileDestinationConfig> configClass() {
@@ -35,6 +38,8 @@ public class FileDestination implements io.conduit.sdk.Destination {
     @Override
     public void open() {
         this.stream = new FileOutputStream(cfg.getPath(), true);
+        this.counter = 0;
+        this.sb = new StringBuilder();
     }
 
     @Override
@@ -45,10 +50,21 @@ public class FileDestination implements io.conduit.sdk.Destination {
 
         for (int i = 0; i < records.size(); i++) {
             try {
+                counter++;
+
+                log.info("adding line to batch, counter is {}, batch size is {}", counter, cfg.getBatchSize());
+
                 byte[] bytes = records.get(i).getPayload().getAfter().bytes();
-                log.info("writing line: {}", new String(bytes));
-                stream.write(bytes);
-                stream.flush();
+                sb.append(new String(bytes));
+
+                if (counter == cfg.getBatchSize()) {
+                    log.info("flushing batch");
+
+                    stream.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+                    stream.flush();
+                    sb = new StringBuilder();
+                    counter = 0;
+                }
             } catch (Exception e) {
                 logger.error("failed writing record", e);
 
