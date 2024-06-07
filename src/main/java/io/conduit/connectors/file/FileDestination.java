@@ -30,8 +30,7 @@ public class FileDestination implements io.conduit.sdk.Destination {
 
     @Override
     public void configure(Map<String, String> configMap) {
-        FileDestinationConfig cfg = ConfigUtils.parse(configMap, configClass());
-        this.cfg = cfg;
+        this.cfg = ConfigUtils.parse(configMap, configClass());
     }
 
     @SneakyThrows
@@ -52,12 +51,12 @@ public class FileDestination implements io.conduit.sdk.Destination {
             try {
                 counter++;
 
-                log.info("adding line to batch, counter is {}, batch size is {}", counter, cfg.getBatchSize());
+                log.info("adding line to batch, counter is {}, batch size is {}", counter, cfg.getBatchConfig().getSize());
 
                 byte[] bytes = records.get(i).getPayload().getAfter().bytes();
                 sb.append(new String(bytes));
 
-                if (counter == cfg.getBatchSize()) {
+                if (counter == cfg.getBatchConfig().getSize()) {
                     log.info("flushing batch");
 
                     stream.write(sb.toString().getBytes(StandardCharsets.UTF_8));

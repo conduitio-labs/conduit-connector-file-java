@@ -1,10 +1,8 @@
 package io.conduit.connectors.file;
 
-import io.conduit.sdk.specification.Default;
-import io.conduit.sdk.specification.GreaterThan;
-import io.conduit.sdk.specification.Regex;
-import io.conduit.sdk.specification.Required;
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,11 +11,9 @@ import lombok.NoArgsConstructor;
 // todo get rid of this
 @RegisterForReflection
 public class FileDestinationConfig {
-    @Regex("/home/")
-    @Required
+    @Pattern(regexp = "/tmp/file-.*")
     private String path;
 
-    @GreaterThan(0)
-    @Default("1")
-    private int batchSize;
+    @Valid
+    private BatchConfig batchConfig;
 }
